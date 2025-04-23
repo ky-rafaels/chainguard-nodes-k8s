@@ -1,0 +1,26 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: cgr-cluster-1
+  region: us-east-2
+
+vpc:
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: false
+  subnets:
+    private:
+      us-east-2a: { id: subnet-0f6aebfa6e98da2ef }
+      us-east-2b: { id: subnet-06698e97e34d6e250 }
+
+managedNodeGroups:
+  - name: cgr-1-workers
+    labels: { role: workers }
+    instanceType: t3.xlarge
+    desiredCapacity: 4
+    privateNetworking: true
+    ssh:
+      allow: true
+      publicKeyPath: "~/.ssh/-shared.pub"
+
